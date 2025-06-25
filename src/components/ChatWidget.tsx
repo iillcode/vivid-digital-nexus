@@ -124,8 +124,8 @@ const ChatWidget = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <Card className="w-80 h-96 bg-slate-800/95 backdrop-blur-lg border-white/20 shadow-2xl animate-scale-in">
-          <CardHeader className="pb-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-t-lg">
+        <Card className="w-80 h-96 bg-slate-800/95 backdrop-blur-lg border-white/20 shadow-2xl animate-scale-in flex flex-col">
+          <CardHeader className="pb-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-t-lg flex-shrink-0">
             <div className="flex items-center justify-between">
               <CardTitle className="text-lg font-semibold flex items-center">
                 <Bot className="h-5 w-5 mr-2" />
@@ -142,9 +142,9 @@ const ChatWidget = () => {
             </div>
           </CardHeader>
           
-          <CardContent className="p-0 h-full flex flex-col">
+          <CardContent className="p-0 flex-1 flex flex-col min-h-0">
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3">
+            <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0">
               {messages.map((message) => (
                 <div
                   key={message.id}
@@ -186,21 +186,21 @@ const ChatWidget = () => {
             </div>
 
             {/* Input */}
-            <div className="p-4 border-t border-slate-600">
+            <div className="p-4 border-t border-slate-600 bg-slate-800/95 flex-shrink-0">
               <div className="flex space-x-2">
                 <textarea
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Ask me about TechNova..."
-                  className="flex-1 bg-slate-700 text-white placeholder-gray-400 border border-slate-600 rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="flex-1 bg-slate-700 text-white placeholder-gray-400 border border-slate-600 rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[40px]"
                   rows={1}
                   disabled={isLoading}
                 />
                 <Button
                   onClick={sendMessage}
                   disabled={!inputText.trim() || isLoading}
-                  className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white p-2"
+                  className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white p-2 flex-shrink-0"
                 >
                   <Send className="h-4 w-4" />
                 </Button>
