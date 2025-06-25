@@ -116,52 +116,54 @@ const ChatWidget = () => {
       {!isOpen && (
         <Button
           onClick={() => setIsOpen(true)}
-          className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+          className="bg-gradient-to-r from-blue-500 via-purple-600 to-blue-500 hover:from-blue-600 hover:via-purple-700 hover:to-blue-600 text-white p-5 rounded-full shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-110 animate-pulse"
         >
-          <MessageCircle className="h-6 w-6" />
+          <MessageCircle className="h-7 w-7" />
         </Button>
       )}
 
       {/* Chat Window */}
       {isOpen && (
-        <Card className="w-80 h-96 bg-slate-800/95 backdrop-blur-lg border-white/20 shadow-2xl animate-scale-in flex flex-col">
-          <CardHeader className="pb-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-t-lg flex-shrink-0">
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-lg font-semibold flex items-center">
-                <Bot className="h-5 w-5 mr-2" />
+        <Card className="w-96 h-[500px] bg-slate-900/95 backdrop-blur-xl border border-blue-500/30 shadow-2xl shadow-blue-500/20 animate-scale-in flex flex-col overflow-hidden">
+          <CardHeader className="pb-4 bg-gradient-to-r from-blue-500 via-purple-600 to-blue-500 text-white rounded-t-lg flex-shrink-0 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-blue-600/20 animate-pulse"></div>
+            <div className="flex items-center justify-between relative z-10">
+              <CardTitle className="text-xl font-bold flex items-center">
+                <Bot className="h-6 w-6 mr-3 animate-bounce" />
                 TechNova Assistant
               </CardTitle>
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsOpen(false)}
-                className="text-white hover:bg-white/20 h-8 w-8"
+                className="text-white hover:bg-white/20 h-9 w-9 rounded-full transition-all duration-200 hover:scale-110"
               >
-                <X className="h-4 w-4" />
+                <X className="h-5 w-5" />
               </Button>
             </div>
+            <div className="text-sm opacity-90 mt-1">Online • Ready to help</div>
           </CardHeader>
           
-          <CardContent className="p-0 flex-1 flex flex-col min-h-0">
+          <CardContent className="p-0 flex-1 flex flex-col min-h-0 bg-gradient-to-b from-slate-900 to-slate-800">
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0">
+            <div className="flex-1 overflow-y-auto p-5 space-y-4 min-h-0 scrollbar-thin scrollbar-thumb-blue-500/20 scrollbar-track-transparent">
               {messages.map((message) => (
                 <div
                   key={message.id}
                   className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[80%] p-3 rounded-lg ${
+                    className={`max-w-[85%] p-4 rounded-2xl transition-all duration-200 hover:scale-105 ${
                       message.isUser
-                        ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
-                        : 'bg-slate-700 text-gray-100'
+                        ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/25'
+                        : 'bg-slate-700/80 backdrop-blur-sm text-gray-100 border border-slate-600/50'
                     }`}
                   >
-                    <div className="flex items-start space-x-2">
-                      {!message.isUser && <Bot className="h-4 w-4 mt-1 flex-shrink-0" />}
-                      {message.isUser && <User className="h-4 w-4 mt-1 flex-shrink-0" />}
+                    <div className="flex items-start space-x-3">
+                      {!message.isUser && <Bot className="h-5 w-5 mt-1 flex-shrink-0 text-blue-400" />}
+                      {message.isUser && <User className="h-5 w-5 mt-1 flex-shrink-0" />}
                       <div
-                        className="text-sm"
+                        className="text-sm leading-relaxed"
                         dangerouslySetInnerHTML={{ __html: message.text }}
                       />
                     </div>
@@ -170,9 +172,9 @@ const ChatWidget = () => {
               ))}
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="bg-slate-700 text-gray-100 p-3 rounded-lg">
-                    <div className="flex items-center space-x-2">
-                      <Bot className="h-4 w-4" />
+                  <div className="bg-slate-700/80 backdrop-blur-sm text-gray-100 p-4 rounded-2xl border border-slate-600/50">
+                    <div className="flex items-center space-x-3">
+                      <Bot className="h-5 w-5 text-blue-400" />
                       <div className="flex space-x-1">
                         <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
                         <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce delay-100"></div>
@@ -186,23 +188,23 @@ const ChatWidget = () => {
             </div>
 
             {/* Input */}
-            <div className="p-4 border-t border-slate-600 bg-slate-800/95 flex-shrink-0">
-              <div className="flex space-x-2">
+            <div className="p-5 border-t border-slate-600/50 bg-slate-800/95 backdrop-blur-sm flex-shrink-0">
+              <div className="flex space-x-3">
                 <textarea
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Ask me about TechNova..."
-                  className="flex-1 bg-slate-700 text-white placeholder-gray-400 border border-slate-600 rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[40px]"
+                  className="flex-1 bg-slate-700/80 text-white placeholder-gray-400 border border-slate-600/50 rounded-xl px-4 py-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[50px] max-h-24 backdrop-blur-sm transition-all duration-200"
                   rows={1}
                   disabled={isLoading}
                 />
                 <Button
                   onClick={sendMessage}
                   disabled={!inputText.trim() || isLoading}
-                  className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white p-2 flex-shrink-0"
+                  className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white p-3 flex-shrink-0 rounded-xl shadow-lg shadow-blue-500/25 transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Send className="h-4 w-4" />
+                  <Send className="h-5 w-5" />
                 </Button>
               </div>
             </div>
